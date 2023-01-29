@@ -91,25 +91,29 @@ entradaDados.question('Digite o nome do aluno: \n', function(nome) {
 
                     //Validação para tratar entradas vazias 
                     if (primeiraNota == '' || segundaNota == '' || terceiraNota == '' || quartaNota == '') {
-                        console.log('ERRO: È necessário digitar algum valor nas entradas.')
-                    } else if (isNaN(primeiraNota) || isNaN(segundaNota) || isNaN(terceiraNoto) || isNaN(quartaNota)) {
+                        console.log('ERRO: É necessário preencher todos os valores')
 
-                        console.log('ERRO: é necessário todos os dados digitados sejam Números')
+                    } else if (isNaN(primeiraNota) || isNaN(segundaNota) || isNaN(terceiraNota) || isNaN(quartaNota)) {
+                        console.log('ERRO: O texto digitado não é um número')
+
+                    } else if (primeiraNota < 0 || primeiraNota > 10 && segundaNota < 0 || segundaNota > 10 && terceiraNota < 0 || terceiraNota > 10 && quartaNota < 0 || quartaNota > 10) {
+                        console.log('ERRO: A nota deve ser entre 0 - 10')
+z
                     } else {
                         media = (Number(primeiraNota) + Number(segundaNota) + Number(terceiraNota) + Number(quartaNota)) / 4
-                        console.log(media)
+
+                        console.log('A média é: ', media)
+                        if (media >= 7) {
+
+                            console.log('APROVADO!')
+
+                        } else {
+                            console.log('REPROVADO!')
+                        }
                     }
-
-                    if (primeiraNota > '10' || segundaNota > '10' || terceiraNota > '10' || quartaNota > '10') {
-                        console
-
-                    } else {
-                        media = (Number(primeiraNota) + Number(segundaNota) + Number(terceiraNota) + Number(quartaNota)) / 4
-                        console.log(media)
-                    }
-
                 })
             })
+
         })
     })
 })
