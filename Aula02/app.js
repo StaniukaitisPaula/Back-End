@@ -86,6 +86,14 @@ entradaDados.question('Digite o nome do aluno: \n', function(nome) {
                      *     E    &&             AND 
                      * Negação   !             NOT  
                      * 
+                     * 
+                     * Ordem de execuçaõ dos Operadores lógicos
+                     * 0° ()
+                     * 1°  Negação
+                     * 2°  E
+                     * 3°  OU
+                     * 
+                     * 
                      */
 
 
@@ -93,23 +101,27 @@ entradaDados.question('Digite o nome do aluno: \n', function(nome) {
                     if (primeiraNota == '' || segundaNota == '' || terceiraNota == '' || quartaNota == '') {
                         console.log('ERRO: É necessário preencher todos os valores')
 
+                        //validação para entrada de dados não numericas   
                     } else if (isNaN(primeiraNota) || isNaN(segundaNota) || isNaN(terceiraNota) || isNaN(quartaNota)) {
                         console.log('ERRO: O texto digitado não é um número')
 
-                    } else if (primeiraNota < 0 || primeiraNota > 10 && segundaNota < 0 || segundaNota > 10 && terceiraNota < 0 || terceiraNota > 10 && quartaNota < 0 || quartaNota > 10) {
-                        console.log('ERRO: A nota deve ser entre 0 - 10')
-z
+                        //validação  de entrada de valores entre 0 e 10
+                    } else if (primeiraNota < 0 || primeiraNota > 10 || segundaNota < 0 || segundaNota > 10 || terceiraNota < 0 ||
+                        terceiraNota > 10 || quartaNota < 0 || quartaNota > 10) {
+
+                        console.log('ERRO: O Sistema aceita somente números entre 0 - 10')
+
                     } else {
                         media = (Number(primeiraNota) + Number(segundaNota) + Number(terceiraNota) + Number(quartaNota)) / 4
 
-                        console.log('A média é: ', media)
                         if (media >= 7) {
 
-                            console.log('APROVADO!')
+                            console.log('Status do Aluno: APROVADO!')
 
                         } else {
-                            console.log('REPROVADO!')
+                            console.log('Status do Aluno: REPROVADO!')
                         }
+                        console.log('Média Final: ' + media.toFixed(1))
                     }
                 })
             })
