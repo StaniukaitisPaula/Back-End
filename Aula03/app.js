@@ -50,25 +50,14 @@ entradaDados.question('Digite o primeiro Número: \n', function(numero1) {
 
             if (operacaoMatematica == '+') {
                 console.log('Resultado:', CalculoSomar)
-            }
-
-            if (operacaoMatematica == '-') {
+            } else if (operacaoMatematica == '-') {
                 console.log('Resultado:', CalculoSubtrair)
-            }
-
-            if (operacaoMatematica == '*') {
+            } else if (operacaoMatematica == '*') {
                 console.log('Resultado:', CalculoMutiplicar)
-            }
-
-            if (operacaoMatematica == '/') {
+            } else if (operacaoMatematica == '/') {
                 console.log('Resultado:', CalculoDivisor)
-            }
-
-            // validaçao para entrada vazias 
-            if (numeroUm == '' || operacaoMatematica == '' || numeroDois == '') {
+            } else if (numeroUm == '' || operacaoMatematica == '' || numeroDois == '') {
                 console.log('ERRO: É necessario preencher todos os Espaços')
-
-                //validação para entrada de dados não numericas  
             } else if (isNaN(numeroUm) || isNaN(numeroDois)) {
                 console.log('ERRO: O texto digitado não é um número')
 
