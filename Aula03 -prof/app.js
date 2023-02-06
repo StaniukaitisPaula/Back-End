@@ -5,9 +5,10 @@
  * versao: 1.0
  */
 
+ //Import da biblioteca da calculadora (criado por nos)
 var matematica = require('./modulo/calculadora.js')
 
-//Importe da biblioteca para entrada de dados
+//Import da biblioteca para entrada de dados
 var readline = require('readline')
 
 //criar um objeto para receber os dados via teclado
@@ -24,7 +25,7 @@ entradaDados.question('valor1: \n', function(numero1) {
 
         let valor2 = numero2.replace(',', '.');
 
-        entradaDados.question('Escolha uma operação: [SOMAR | SUBTRAIR | MULTIPLICAR | DIVIDIR ]: \n', function(tipoCalculo) {
+        entradaDados.question('Escolha uma operação: [ SOMAR | SUBTRAIR | MULTIPLICAR | DIVIDIR ]: \n', function(tipoCalculo) {
 
             //toUpperCase - converte uma string para MAIUSCULO
             //toLowerrCase - converte uma string para minusculo
@@ -44,9 +45,18 @@ entradaDados.question('valor1: \n', function(numero1) {
                 entradaDados.close(); // fecha o objeto de entrada de dados (encerra o programa)
             } else {
 
+                //chama a funçao para calcular, encaminhando os dados para o calculo
                 resultado = matematica.calcular(valor1, valor2, operacao);
-                console.log(resultado)
-                entradaDados.close();
+
+                //validar se o retorno da funcao é verdadeira ou falso (se for falso, encerra o programa)
+                //if (resultado == false && typeof(resultado) == 'boolean') ou
+                if(resultado === false )
+                 entradaDados.close();
+
+               else 
+                    console.log(resultado);
+                
+
 
             }
         })
