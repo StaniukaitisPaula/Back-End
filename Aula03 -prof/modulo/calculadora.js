@@ -160,7 +160,7 @@ const calcular = function(numero1, numero2, tipoCalculo){
 
 //todas essas funcoes 
 //forma 3 de se criar uma funçao em JS (modelo arrow function)
-const somae       =  (valor1, valor2) => Number(valor1) + Number(valor2)
+const somar     =  (valor1, valor2) => Number(valor1) + Number(valor2)
 const subtrair    =  (valor1, valor2) => Number(valor1) - Number(valor2)
 const multiplicar =  (valor1, valor2) => Number(valor1) * Number(valor2)
 const dividir     =  (valor1, valor2) => Number(valor1) / Number(valor2)
