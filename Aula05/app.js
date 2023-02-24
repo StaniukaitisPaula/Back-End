@@ -112,11 +112,11 @@ const filtrandoElementos = function() {
 
 }
 
-const removerElementos = function(nomeProduto) {
+const removerElementos = function(array, nomeItem) {
     //cria uma copia do array
-    let novaLista = listaProdutos.slice()
+    let novaLista = array.slice()
 
-    let nome = nomeProduto
+    let nome = nomeItem
     let indice = novaLista.indexOf(nome)
     let status
 
@@ -136,5 +136,5 @@ const removerElementos = function(nomeProduto) {
         return status
 }
 
-console.log(removerElementos('Monitor'))
+console.log(removerElementos(listaProdutos, 'Monitor'))
 console.log(listaProdutos)
