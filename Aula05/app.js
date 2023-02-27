@@ -12,9 +12,22 @@
 
 const listaNomes = ['jose', 'maria', 'luiz', 'carlos']
 const listaProdutos = ['Teclado', 'Mouse', 'Monitor', 'Computador', 'Fone', 'Impressora', 'Scanner', 'WebCan']
+const listaProdutosJSON = {};
+
+/*
+    Exemplo de um JSON com estrutura de array
+
+     produtos ={
+        [
+            {nome : "Teclado", cor : "preto", quantidade : 50}
+            {nome : "Monitor", cor : "Branco", quantidade : 30}
+            {nome : "Mouse", cor : "preto", quantidade : 200}
+        ]
+
+     }
+*/
 
 // forma ERRADA DE MANUPILAR UM CONJUNTO DE DADOS
-
 // const nome1 = 'jose'
 // const nome2 = 'maria'
 // const nome3 = 'luiz'
@@ -136,5 +149,73 @@ const removerElementos = function(array, nomeItem) {
         return status
 }
 
-console.log(removerElementos(listaProdutos, 'Monitor'))
-console.log(listaProdutos)
+const listagemProdutos = function() {
+    let listProdutosJSON = {}
+
+    let listProdutos = [
+        { nome: 'Teclado DELL', valor: '200', quantidade: '50' },
+        { nome: 'Monitor DELL', valor: '1000', quantidade: '70' },
+        { nome: 'Mouse DELL', valor: '100', quantidade: '350' },
+    ]
+
+    let listCores = ['Branco', 'Preto', 'Cinza']
+    let listTipoTeclados = ['Mecanico', 'Semi-Mecanico', 'Membrana']
+    let listTipoMonitor = ['LCD', 'full-HD', '4K', 'OLED']
+
+    //ADD chaves (opções) no teclado
+    listProdutos[0].cores = listCores
+    listProdutos[0].tipo = listTipoTeclados
+
+    //ADD chaves (opções) Monitor 
+    listProdutos[1].cores = listCores
+    listProdutos[1].tipo = listTipoMonitor
+
+    //ADD chaves (opções) Mouse 
+    listProdutos[2].cores = listCores
+
+    //ÃDD uma chave produtos e coloca toda a estrutura dos produtos dentro dela 
+    listProdutosJSON.produtos = listProdutos
+
+    console.log(listProdutosJSON)
+
+    // console.log('nome:' + listProdutosJSON.produtos[1].nome)
+    // console.log('\n Valor:' + listProdutosJSON.produtos[1].valor)
+    // console.log('\n Cor:' + listProdutosJSON.produtos[1].cores[1])
+
+
+    //retorna todos os dados de produtos (1° Nivel do dados do json)
+    listProdutosJSON.produtos.forEach(function(dadosProdutos) {
+        console.log('Nome:' + dadosProdutos.nome)
+        console.log('Valor:' + dadosProdutos.valor)
+        console.log('qtde:' + dadosProdutos.quantidade)
+
+        //validaçao para tratar quando nao existe cores de produto
+        if (dadosProdutos.cores != undefined) {
+            //retorna todas a cores existentes para cada produto
+            dadosProdutos.cores.forEach(function(dadosCores) {
+                console.log('-' + dadosCores)
+            })
+        }
+        //validaçao para tratar quando nao existe tipos de produto
+        if (dadosProdutos.tipo != undefined) {
+            //retorna os tipos existentes para cada produto
+            dadosProdutos.tipo.forEach(function(dadosTipos) {
+                console.log('--' + dadosTipos)
+
+            })
+        }
+    })
+
+
+    //listaProdutosJSON.produtos = listaProdutos
+    //listaProdutosJSON.clientes = listaNomes
+
+    //console.log(listaProdutosJSON.produtos[1])
+    //console.log(listaProdutosJSON.clientes[2])
+
+
+}
+listagemProdutos();
+
+//console.log(removerElementos(listaProdutos, 'Monitor'))
+//console.log(listaProdutos)
