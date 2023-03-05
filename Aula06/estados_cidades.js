@@ -1,19 +1,3 @@
-const getListaDeEstados = function(array) {
-
-    let listEstados = estadosCidades.estados.length
-
-    for (let cont = 0; cont < listEstados; cont++) {
-        console.log(`UF: ${estadosCidades.estados[cont].sigla}`)
-    }
-    listaNomes.forEach(function(nome) {
-
-        console.log(`Nome: ${nome}`)
-    });
-
-
-}
-
-
 
 
 var estadosCidades = {
@@ -22484,5 +22468,44 @@ var estadosCidades = {
     ]
 };
 
+function getListaDeEstados() {
+    let listaEstadosJson = {}
 
+    let listaEstados = []
+
+    estadosCidades.estados.forEach(estadosForEach => {
+
+        listaEstados.push(estadosForEach.sigla)
+
+    })
+    listaEstadosJson.uf = listaEstados
+    listaEstadosJson.quantidade = listaEstados.length
+
+    return listaEstadosJson
+
+}
+//console.log(getListaDeEstados())
 getListaDeEstados();
+
+function getDadosEstado(siglaEstado){
+    let listaEstadosJson = {}
+
+    let status = false
+
+    estadosCidades.estados.forEach(estadosForEach => {
+        if (siglaEstado == estadosForEach.sigla) {
+
+            listaEstadosJson.uf = estadosForEach.sigla
+            listaEstadosJson.descricao = estadosForEach.nome
+            listaEstadosJson.capital = estadosForEach.capital
+            listaEstadosJson.regiao = estadosForEach.regiao
+            status = true
+        }
+    })
+    if (status == true)
+        return listaEstadosJson
+    else
+        return status
+
+}
+ console.log(getDadosEstado("SP"));
