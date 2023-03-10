@@ -1,4 +1,3 @@
-
 var estadosCidades = {
     pais: 'Brasil',
     estados: [{
@@ -22486,7 +22485,7 @@ function getListaDeEstados() {
 //console.log(getListaDeEstados())
 // getListaDeEstados();
 
-function getDadosEstado(siglaEstado){
+function getDadosEstado(siglaEstado) {
     let listaJson = {}
     let status = false
 
@@ -22506,15 +22505,15 @@ function getDadosEstado(siglaEstado){
         return status
 
 }
- //console.log(getDadosEstado("SP"));
+//console.log(getDadosEstado("SP"));
 
- function getCapitalEstado(sigla){
-     const listaJson = {}
+function getCapitalEstado(sigla) {
+    const listaJson = {}
 
-    estadosCidades.estados.forEach(function(dados){
+    estadosCidades.estados.forEach(function(dados) {
 
-        if(sigla == dados.sigla){
-            
+        if (sigla == dados.sigla) {
+
             listaJson.uf = dados.sigla
             listaJson.descricao = dados.nome
             listaJson.capital = dados.capital
@@ -22522,45 +22521,45 @@ function getDadosEstado(siglaEstado){
         }
     })
     return listaJson
-     
- } 
+
+}
 //console.log(getCapitalEstado("AC"));
 
- function getEstadosRegiao(regiao){
+function getEstadosRegiao(regiao) {
     const listaEstadosJson = {}
     const listaArry = []
 
-    estadosCidades.estados.forEach(function(dados){
-        if(regiao == dados.regiao){
+    estadosCidades.estados.forEach(function(dados) {
+        if (regiao == dados.regiao) {
 
-            listaArry.push({uf:dados.sigla, descricao:dados.nome})
+            listaArry.push({ uf: dados.sigla, descricao: dados.nome })
 
         }
         listaEstadosJson.regiao = regiao.toUpperCase()
         listaEstadosJson.estados = listaArry
     })
     return listaEstadosJson
-     
- } 
- console.log(getEstadosRegiao("Sul"))
- //getEstadosRegiao()
+
+}
+console.log(getEstadosRegiao("Sul"))
+    //getEstadosRegiao()
 
 
- function getCapitalPais(){
+function getCapitalPais() {
     const listaJson = {}
     const listaArry = []
 
-    estadosCidades.estados.forEach(function(dados){
+    estadosCidades.estados.forEach(function(dados) {
 
-        if(dados.capital_pais != undefined){
+        if (dados.capital_pais != undefined) {
             listaArry.push({
-                capital_atual:dados.capital_pais.capital,
-                uf:dados.sigla,
-                descricao:dados.nome,
-                capital:dados.capital,
-                regiao:dados.regiao,
-                capital_pais_ano_inicio:dados.capital_pais.ano_inicio,
-                capital_pais_ano_termino:dados.capital_pais.ano_fim
+                capital_atual: dados.capital_pais.capital,
+                uf: dados.sigla,
+                descricao: dados.nome,
+                capital: dados.capital,
+                regiao: dados.regiao,
+                capital_pais_ano_inicio: dados.capital_pais.ano_inicio,
+                capital_pais_ano_termino: dados.capital_pais.ano_fim
 
 
             })
@@ -22569,32 +22568,42 @@ function getDadosEstado(siglaEstado){
 
     })
     return listaJson
- }
- //console.log(getCapitalPais("Brasil"))
+}
+//console.log(getCapitalPais("Brasil"))
 
- function getCidades(siglaEstados){
+function getCidades(siglaEstados) {
     const listaJson = {}
     const listaArry = []
 
-    estadosCidades.estados.forEach(function(dados){
+    estadosCidades.estados.forEach(function(dados) {
 
-        if(siglaEstados == dados.sigla){
-            dados.cidades.forEach(function(dadosCidades){
+        if (siglaEstados == dados.sigla) {
+            dados.cidades.forEach(function(dadosCidades) {
                 listaArry.push(dadosCidades.nome)
 
             })
-            
+
             listaJson.uf = dados.sigla
             listaJson.descricao = dados.nome
             listaJson.quantidade = listaArry.length
             listaJson.cidades = listaArry
 
         }
-      
-       
+
+
     })
 
     return listaJson
-    }
+}
 
 //console.log(getCidades('AC'))
+module.exports = {
+    getListaDeEstados,
+    getDadosEstado,
+    getCapitalEstado,
+    getEstadosRegiao,
+    getCapitalPais,
+    getCidades
+
+
+}
