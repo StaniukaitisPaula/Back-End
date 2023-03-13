@@ -22490,7 +22490,7 @@ function getDadosEstado(siglaEstado) {
     let status = false
 
     estadosCidades.estados.forEach(estadosForEach => {
-        if (siglaEstado == estadosForEach.sigla) {
+        if (siglaEstado.toUpperCase() == estadosForEach.sigla.toUpperCase()) {
 
             listaJson.uf = estadosForEach.sigla
             listaJson.descricao = estadosForEach.nome
@@ -22512,7 +22512,7 @@ function getCapitalEstado(sigla) {
 
     estadosCidades.estados.forEach(function(dados) {
 
-        if (sigla == dados.sigla) {
+        if (sigla.toUpperCase() == dados.sigla.toUpperCase()) {
 
             listaJson.uf = dados.sigla
             listaJson.descricao = dados.nome
@@ -22530,7 +22530,7 @@ function getEstadosRegiao(regiao) {
     const listaArry = []
 
     estadosCidades.estados.forEach(function(dados) {
-        if (regiao == dados.regiao) {
+        if (regiao.toUpperCase() == dados.regiao.toUpperCase()) {
 
             listaArry.push({ uf: dados.sigla, descricao: dados.nome })
 
@@ -22541,8 +22541,8 @@ function getEstadosRegiao(regiao) {
     return listaEstadosJson
 
 }
-console.log(getEstadosRegiao("Sul"))
-    //getEstadosRegiao()
+//console.log(getEstadosRegiao("Sul"))
+//getEstadosRegiao()
 
 
 function getCapitalPais() {
@@ -22577,7 +22577,7 @@ function getCidades(siglaEstados) {
 
     estadosCidades.estados.forEach(function(dados) {
 
-        if (siglaEstados == dados.sigla) {
+        if (siglaEstados.toUpperCase() == dados.sigla.toUpperCase) {
             dados.cidades.forEach(function(dadosCidades) {
                 listaArry.push(dadosCidades.nome)
 
