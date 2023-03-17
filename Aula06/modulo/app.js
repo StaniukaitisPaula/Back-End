@@ -71,123 +71,110 @@ app.get('/estados', cors(), async function(request, response, next) {
 
 //endPoints -> lista as caracteristicas do estado pela sigla
 app.get('/estado/sigla/:uf', cors(), async function(request, response, next) {
-    //:uf - é uma variavel que séra utilizada para passagens de valores. na URL da requisiçao
+        //:uf - é uma variavel que séra utilizada para passagens de valores. na URL da requisiçao
 
-    //recebe  o valor de variavel uf, que sera encaminhada na URL da requisiçao
-    let siglaEstado = request.params.uf;
-    let statusCode
-    let dadosEstado = {}
+        //recebe  o valor de variavel uf, que sera encaminhada na URL da requisiçao
+        let siglaEstado = request.params.uf;
+        let statusCode
+        let dadosEstado = {}
 
-    //Tratamento para validar os valores encaminhados no parametro
-    if (siglaEstado == '' || siglaEstado == undefined || siglaEstado.length != 2 || !isNaN(siglaEstado)) {
+        //Tratamento para validar os valores encaminhados no parametro
+        if (siglaEstado == '' || siglaEstado == undefined || siglaEstado.length != 2 || !isNaN(siglaEstado)) {
 
-        statusCode = 400
-        dadosEstado.message = "Não é possivel processar a requisiçao pois a sigla do estado não foi informada ou não atende a quantidade de caracteres (2 Digitos)";
-
-    } else {
-        //chama a funçao que flitra o estado pela sigla
-        let estado = estadosCidades.getDadosEstado(siglaEstado)
-
-        //validar se houve retorno valido da funçao
-        if (estado) {
-            statusCode = 200 //Estado encontrado
-            dadosEstado = estado
+            statusCode = 400
+            dadosEstado.message = "Não é possivel processar a requisiçao pois a sigla do estado não foi informada ou não atende a quantidade de caracteres (2 Digitos)";
 
         } else {
-            statusCode = 404 // Estado nao encontrado
-        }
-    }
-    response.status(statusCode)
-    response.json(dadosEstado)
-})
+            //chama a funçao que flitra o estado pela sigla
+            let estado = estadosCidades.getDadosEstado(siglaEstado)
 
+            //validar se houve retorno valido da funçao
+            if (estado) {
+                statusCode = 200 //Estado encontrado
+                dadosEstado = estado
+
+            } else {
+                statusCode = 404 // Estado nao encontrado
+            }
+        }
+        response.status(statusCode)
+        response.json(dadosEstado)
+    })
+    //endPoints para LISTAR CAPITAL ESTADO
 app.get('/estado/sigla/capital/:uf', cors(), async function(request, response, next) {
 
-    let siglaCapital = request.params.uf;
-    let statusCode
-    let dadosEstado = {}
+        let siglaCapital = request.params.uf;
+        let statusCode
+        let dadosEstado = {}
 
-    //Tratamento para validar os valores encaminhados no parametro
-    if (siglaCapital == '' || siglaCapital == undefined || siglaCapital.length != 2 || !isNaN(siglaCapital)) {
+        //Tratamento para validar os valores encaminhados no parametro
+        if (siglaCapital == '' || siglaCapital == undefined || siglaCapital.length != 2 || !isNaN(siglaCapital)) {
 
-        statusCode = 400
-        dadosEstado.message = "Não é possivel processar a requisiçao pois a sigla do estado não foi informada ou não atende a quantidade de caracteres (2 Digitos)";
-
-    } else {
-        //chama a funçao que flitra o estado pela sigla
-        let capital = estadosCidades.getCapitalEstado(siglaCapital)
-
-        //validar se houve retorno valido da funçao
-        if (capital) {
-            statusCode = 200 //Estado encontrado
-            dadosEstado = capital
+            statusCode = 400
+            dadosEstado.message = "Não é possivel processar a requisiçao pois a sigla do estado não foi informada ou não atende a quantidade de caracteres (2 Digitos)";
 
         } else {
-            statusCode = 404 // Estado nao encontrado
-        }
-    }
-    response.status(statusCode)
-    response.json(dadosEstado)
-})
+            //chama a funçao que flitra o estado pela sigla
+            let capital = estadosCidades.getCapitalEstado(siglaCapital)
 
+            //validar se houve retorno valido da funçao
+            if (capital) {
+                statusCode = 200 //Estado encontrado
+                dadosEstado = capital
+
+            } else {
+                statusCode = 404 // Estado nao encontrado
+            }
+        }
+        response.status(statusCode)
+        response.json(dadosEstado)
+    })
+    //endPoints para LISTAR ESTADOS REGIAO
 app.get('/estado/sigla/regiao/:uf', cors(), async function(request, response, next) {
 
-    let siglaRegiao = request.params.uf;
-    let statusCode
-    let dadosEstado = {}
+        let siglaRegiao = request.params.uf;
+        let statusCode
+        let dadosEstado = {}
 
-    //Tratamento para validar os valores encaminhados no parametro
-    if (siglaRegiao == '' || siglaRegiao == undefined || !isNaN(siglaRegiao)) {
+        //Tratamento para validar os valores encaminhados no parametro
+        if (siglaRegiao == '' || siglaRegiao == undefined || !isNaN(siglaRegiao)) {
 
-        statusCode = 400
-        dadosEstado.message = "Não é possivel processar a requisiçao pois a sigla do estado não foi informada ou não atende a quantidade de caracteres (2 Digitos)";
-
-    } else {
-        let regiao = estadosCidades.getEstadosRegiao(siglaRegiao)
-
-
-        if (regiao) {
-            statusCode = 200 //Estado encontrado
-            dadosEstado = regiao
+            statusCode = 400
+            dadosEstado.message = "Não é possivel processar a requisiçao pois a sigla do estado não foi informada ou não atende a quantidade de caracteres (2 Digitos)";
 
         } else {
-            statusCode = 404 // Estado nao encontrado
+            let regiao = estadosCidades.getEstadosRegiao(siglaRegiao)
+
+
+            if (regiao) {
+                statusCode = 200 //Estado encontrado
+                dadosEstado = regiao
+
+            } else {
+                statusCode = 404 // Estado nao encontrado
+            }
         }
-    }
-    response.status(statusCode)
-    response.json(dadosEstado)
-})
+        response.status(statusCode)
+        response.json(dadosEstado)
+    })
+    //endPoints para CAPITAL PAIS
+app.get('/estados/pais/capital/', cors(), async function(request, response, next) {
 
-app.get('/pais/capitais/', cors(), async function(request, response, next) {
+        //chama a funçao que retorna os estados
+        let listaDeCapitais = estadosCidades.getCapitalPais()
 
-    let siglaPais = request.params.uf;
-    let statusCode
-    let dadosEstado = {}
-
-    //Tratamento para validar os valores encaminhados no parametro
-    if (siglaPais == '' || siglaPais == undefined || !isNaN(siglaPais)) {
-
-        statusCode = 400
-        dadosEstado.message = "Não é possivel processar a requisiçao pois a sigla do estado não foi informada ou não atende a quantidade de caracteres (2 Digitos)";
-
-    } else {
-        let pais = estadosCidades.getEstadosRegiao(siglaPais)
-
-
-        if (pais) {
-            statusCode = 200 //Estado encontrado
-            dadosEstado = pais
+        //tratamento para validar se a funçao realizou o processamento
+        if (listaDeCapitais) {
+            //retorna o Json e o status code
+            response.json(listaDeCapitais)
+            response.status(200)
 
         } else {
-            statusCode = 404 // Estado nao encontrado
+            response.status(500)
         }
-    }
-    response.status(statusCode)
-    response.json(dadosEstado)
-})
-
-
-app.get('/estado/sigla/cidades/:uf', cors(), async function(request, response, next) {
+    })
+    //endPoints para LISTAR CIDADES
+app.get('/estados/:uf', cors(), async function(request, response, next) {
 
     let siglaCidades = request.params.uf;
     let statusCode
@@ -205,7 +192,7 @@ app.get('/estado/sigla/cidades/:uf', cors(), async function(request, response, n
 
         if (cidade) {
             statusCode = 200 //Estado encontrado
-            dadosEstado = pais
+            dadosEstado = cidade
 
         } else {
             statusCode = 404 // Estado nao encontrado

@@ -22569,7 +22569,7 @@ function getCapitalPais() {
     })
     return listaJson
 }
-//console.log(getCapitalPais("Brasil"))
+//console.log(getCapitalPais())
 
 function getCidades(siglaEstados) {
     const listaJson = {}
@@ -22577,7 +22577,7 @@ function getCidades(siglaEstados) {
 
     estadosCidades.estados.forEach(function(dados) {
 
-        if (siglaEstados.toUpperCase() == dados.sigla.toUpperCase) {
+        if (siglaEstados.toUpperCase() == dados.sigla.toUpperCase()) {
             dados.cidades.forEach(function(dadosCidades) {
                 listaArry.push(dadosCidades.nome)
 
