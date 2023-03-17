@@ -28,6 +28,7 @@ const bodyParser = require('body-parser')
 
 //Impot do arquivo de fuçoes para listar estados e cidades
 const estadosCidades = require('./estados_cidades.js')
+const { request } = require('express')
 
 //cria um objeto com as informaçoes da classe express
 const app = express()
@@ -51,7 +52,7 @@ app.use((request, response, next) => {
 //endPoints 
 
 //endPoints para LISTAR os ESTADOS
-app.get('/estados', cors(), async function(request, response, next) {
+app.get('/v1/senai/estados', cors(), async function(request, response, next) {
 
     //chama a funçao que retorna os estados
     let listaDeEstados = estadosCidades.getListaDeEstados()
@@ -70,7 +71,7 @@ app.get('/estados', cors(), async function(request, response, next) {
 })
 
 //endPoints -> lista as caracteristicas do estado pela sigla
-app.get('/estado/sigla/:uf', cors(), async function(request, response, next) {
+app.get('/v1/senai/estado/sigla/:uf', cors(), async function(request, response, next) {
         //:uf - é uma variavel que séra utilizada para passagens de valores. na URL da requisiçao
 
         //recebe  o valor de variavel uf, que sera encaminhada na URL da requisiçao
@@ -101,7 +102,7 @@ app.get('/estado/sigla/:uf', cors(), async function(request, response, next) {
         response.json(dadosEstado)
     })
     //endPoints para LISTAR CAPITAL ESTADO
-app.get('/estado/sigla/capital/:uf', cors(), async function(request, response, next) {
+app.get('/v1/senai/estado/sigla/capital/:uf', cors(), async function(request, response, next) {
 
         let siglaCapital = request.params.uf;
         let statusCode
@@ -174,6 +175,7 @@ app.get('/estados/pais/capital/', cors(), async function(request, response, next
         }
     })
     //endPoints para LISTAR CIDADES
+
 app.get('/estados/:uf', cors(), async function(request, response, next) {
 
     let siglaCidades = request.params.uf;
@@ -202,7 +204,48 @@ app.get('/estados/:uf', cors(), async function(request, response, next) {
     response.json(dadosEstado)
 })
 
-//permite carregar os endPoints e aguardar as requisiçoes pelo protocolo HTTP na porta 8080
+//EndPoint: lista de cidades filtrada pela sigla do estado
+app.get('/v1/senai/cidades', cors(), async function(request, response, next) {
+
+    //recebe o valor da variavel que sera enviada por QUERYSTRING
+    //EX: www.uol.com.br?uf=sp&cep:00558839&nome:paula
+
+    /*
+    USAMOS  A QUERY PARA RECEBER DIVERSAS VARIAVEIS PARA REALIZAR FILTROS.
+    USAMOS  O PARAMS PARA RECEBER ID (PK), GERALMENTE PARA FAZER PUT, DELETE, GET .
+    
+    */
+    let siglaEstado = request.query.uf
+    let statusCode
+    let dadosEstado = {}
+
+    //Tratamento para validar os valores encaminhados no parametro
+    if (siglaEstado == '' || siglaEstado == undefined || !isNaN(siglaEstado)) {
+
+        statusCode = 400
+        dadosEstado.message = "Não é possivel processar a requisiçao pois a sigla do estado não foi informada ou não atende a quantidade de caracteres (2 Digitos)";
+
+    } else {
+        let cidade = estadosCidades.getCidades(siglaEstado)
+
+
+        if (cidade) {
+            statusCode = 200 //Estado encontrado
+            dadosEstado = cidade
+
+        } else {
+            statusCode = 404 // Estado nao encontrado
+        }
+    }
+    response.status(statusCode)
+    response.json(dadosEstado)
+})
+
+//EndPoint versao 2: lista de cidades filtradas pela sigla do estado com mais detalhes
+app.get('v1/senai/cidades', cors(), async function(response, request, next) {
+
+    })
+    //permite carregar os endPoints e aguardar as requisiçoes pelo protocolo HTTP na porta 8080
 app.listen(8080, function() {
     console.log('servidor aguardando requisiçoes na porta 8080')
 });
