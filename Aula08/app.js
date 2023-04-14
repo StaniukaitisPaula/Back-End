@@ -4,6 +4,13 @@
  * Autor: Paula
  * Versão: 1.0
  * ******************************************************************************/
+/********************************************************************************
+ * para realizar a conexao com o banco de dados iremos utilizar o PRISMA
+ * npm install prisma --save
+ * npx prisma
+ * npx prisma init
+ * npm install @prisma/client
+ * ******************************************************************************/
 
 //Import das dependências para criar a API
 
