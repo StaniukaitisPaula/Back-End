@@ -551,7 +551,7 @@ const listarContatos = function(number) {
         return status
 }
 
-console.log(listarContatos(11987876567));
+console.log(listarContatos(11966578996));
 
 module.exports = {
     listarContatos

@@ -22541,8 +22541,8 @@ function getEstadosRegiao(regiao) {
     return listaEstadosJson
 
 }
-//console.log(getEstadosRegiao("Sul"))
-//getEstadosRegiao()
+console.log(getEstadosRegiao("Sul"))
+    //getEstadosRegiao()
 
 
 function getCapitalPais() {
