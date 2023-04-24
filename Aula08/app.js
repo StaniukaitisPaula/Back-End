@@ -40,6 +40,20 @@ app.use((request, response, next) => {
 //EndPoint: retorna todos os dados de alunos
 app.get('/v1/lion-school/aluno', cors(), async function(request, response) {
 
+    //Import da controller do aluno
+    let controllerAluno = require('./controller/controller_aluno.js')
+
+    //solicita a controller que retorna todos os aluns do BD
+    let dados = await controllerAluno.selecionarTodosOsAlunos()
+
+    //valida se existe registros para retornar na requisiçao
+    if (dados) {
+        response.json(dados)
+        response.status(200)
+    } else {
+        response.json()
+        response.status(404)
+    }
 
 });
 
@@ -66,3 +80,7 @@ app.delete('/v1/lion-school/aluno/:id', cors(), async function(request, response
 
 
 });
+
+app.listen(8080, function() {
+    console.log('servidor aguardando requisiçoes na porta 8080!')
+})
