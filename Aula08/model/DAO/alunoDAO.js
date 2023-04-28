@@ -5,8 +5,36 @@
  * Versão: 1.0
  * ******************************************************************************/
 
+//Import da biblioteca do prisma client (responsavel por manipular dados no BD)
+var { PrismaClient } = require('@prisma/client')
+
+//Instacia da classe do PrimasClient 
+var prisma = new PrismaClient();
+
+
 //inserir um novo registro no banco de dados
-const insertAluno = function(dadosAluno) {
+const insertAluno = async function(dadosAluno) {
+
+    //script SQL pra inserir os dados no BD
+    let sql = `insert into tbl_aluno (nome, cpf, rg, data_nascimento, email)
+   values(
+    '${dadosAluno.nome}',
+   ' ${dadosAluno.cpf}',
+    '${dadosAluno.rg}',
+    '${dadosAluno.data_nascimento}',
+   ' ${dadosAluno.email}'
+    )`
+
+    // console.log(sql);
+
+    //executa o script SQL no BD e recebemos o retorno se deu certo ou nao
+    let result = await prisma.$executeRawUnsafe(sql)
+
+    //console.log(result)
+    if (result)
+        return true
+    else
+        return false;
 
 }
 
@@ -36,6 +64,7 @@ const selectAllAluno = async function() {
     //$queryRaw() é utiltilizado quando passar o script direto no metodo. (EX: $queryRaw(select * from tbl_aluno)
     let rsAluno = await prisma.$queryRawUnsafe(sql)
 
+    //validar se o Bd retornou algum registro
     if (rsAluno.length > 0)
         return rsAluno
     else
@@ -49,5 +78,6 @@ const selectByIdAluno = function(id) {
 }
 
 module.exports = {
-    selectAllAluno
+    selectAllAluno,
+    insertAluno
 }
