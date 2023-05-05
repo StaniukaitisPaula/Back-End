@@ -42,6 +42,7 @@ const bodyJSON = bodyParser.json()
 
 //Import da controller do aluno
 var controllerAluno = require('./controller/controller_aluno.js')
+var message = require('./controller/c')
 
 //EndPoint: retorna todos os dados de alunos
 app.get('/v1/lion-school/aluno', cors(), async function(request, response) {
@@ -70,6 +71,12 @@ app.get('/v1/lion-school/aluno/:id', cors(), async function(request, response) {
 //EndPoint: inserir um novo aluno
 app.post('/v1/lion-school/aluno', cors(), bodyJSON, async function(request, response) {
 
+    let contentType = request.headers['content-type']
+    
+    if(String(contentType).toLowerCase() == 'application/json'){
+
+    
+
     //recebe os dados encaminhados no body da requisiçao
     let dadosBody = request.body
         //console.log(dadosBody)
@@ -82,16 +89,40 @@ app.post('/v1/lion-school/aluno', cors(), bodyJSON, async function(request, resp
     response.status(resultIsertDados.status)
     response.json(resultIsertDados)
 
+    }else{
+        response.status
+    } 
+
+
 });
 
 //EndPoint: atualiza um aluno pelo Id
-app.put('/v1/lion-school/aluno/:id', cors(), async function(request, response) {
+app.put('/v1/lion-school/aluno/:id', cors(), bodyJSON, async function(request, response) {  
+     //recebe os dados do body   
+    let dadosBody = request.body
 
+    //recebe o id do aluno
+    let idAluno = request.params.id
+
+    //encaminhar os dados para serem atualizados
+    let resultUpdateDados = await controllerAluno.atualizarAluno(dadosBody, idAluno)
+    
+    response.status(resultUpdateDados.status)
+    response.json(resultUpdateDados)
 
 });
 
 //EndPoint: excluir um aluno pelo Id
 app.delete('/v1/lion-school/aluno/:id', cors(), async function(request, response) {
+
+  //recebe o id do aluno
+  let id = request.params.id
+
+  let resultDeeleteDados = await controllerAluno.deletarAluno(id)
+
+  response.status(resultDeeleteDados.status)
+  response.json(resultDeeleteDados)
+
 
 
 });

@@ -9,13 +9,13 @@
 //Import do arquivo de acesso ao BD
 var alunoDAO = require('../model/DAO/alunoDAO.js')
 
+ //Import do arquivo global de configuraçoes do projeto
+var message = require('./modulo/config.js')
 
 //funçao para receber os dados do app e enviar para a model para inserir novo item 
 const inserirAluno = async function(dadosAluno) {
 
-    //Import do arquivo global de configuraçoes do projeto
-    let message = require('./modulo/config.js')
-
+    //validaçao de dados
     if (dadosAluno.nome == '' || dadosAluno.nome == undefined || dadosAluno.nome.length >= 100 ||
         dadosAluno.cpf == '' || dadosAluno.cpf == undefined || dadosAluno.cpf.length >= 18 ||
         dadosAluno.rg == '' || dadosAluno.rg == undefined || dadosAluno.rg.length >= 15 ||
@@ -33,7 +33,7 @@ const inserirAluno = async function(dadosAluno) {
         if (status)
             return message.CREATED_ITEM
         else
-            return message.ERROR_INTERNAAL_SERVER
+            return message.ERROR_INTERNAL_SERVER
     }
 
 
@@ -41,17 +41,52 @@ const inserirAluno = async function(dadosAluno) {
 }
 
 //funçao para receber os dados do app e enviar para a model para atualizar o item existente 
-const atualizarAluno = function(dadosAluno) {
+const atualizarAluno = async function(dadosAluno, idAluno) {
+     //validçao de dados
+    if (
+    dadosAluno.nome == '' || dadosAluno.nome == undefined || dadosAluno.nome.length >= 100 ||
+    dadosAluno.cpf == '' || dadosAluno.cpf == undefined || dadosAluno.cpf.length >= 18 ||
+    dadosAluno.rg == '' || dadosAluno.rg == undefined || dadosAluno.rg.length >= 15 ||
+    dadosAluno.data_nascimento == '' || dadosAluno.data_nascimento == undefined || dadosAluno.data_nascimento >= 10 ||
+    dadosAluno.email == '' || dadosAluno.email == undefined || dadosAluno.email >= 250
+) {
 
+    return message.ERROR_REQUIRE_DATA;
+    //validacao para o id
+    } else if(idAluno == '' || idAluno == undefined || isNaN(idAluno)){
+     
+            return  message.ERROR_REQUIRE_ID
+    } else{
+        //add o ID no json com  todos os dados
+        dadosAluno.id = idAluno
 
+        // encaminha parao DAO os dados para serem alterados
+        let status = await alunoDAO.updateAluno(dadosAluno)
+        
+        if(status)
+            return message.UPDATED_ITEM
+        else
+            return message.ERROR_INTERNAL_SERVER    
+
+}
 
 }
 
 //funçao para excluir um aluno filtrado pela id, sera encaminhado para a model
-const deletarAluno = function(id) {
+const deletarAluno = async function(id) {
 
+    if(id == '' || id == undefined || isNaN(id)){
 
+        return  message.ERROR_REQUIRE_ID
 
+    } else{
+        let status = await alunoDAO.deleteAluno(id)
+        
+        if(status)
+            return message.DELETE_ITEM
+        else
+            return message.ERROR_INTERNAL_SERVER    
+    }
 
 }
 
@@ -81,5 +116,7 @@ const buscarIdAluno = function(id) {
 
 module.exports = {
     selecionarTodosOsAlunos,
-    inserirAluno
+    inserirAluno,
+    atualizarAluno,
+    deletarAluno
 }
