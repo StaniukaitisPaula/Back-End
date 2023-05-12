@@ -42,28 +42,46 @@ const bodyJSON = bodyParser.json()
 
 //Import da controller do aluno
 var controllerAluno = require('./controller/controller_aluno.js')
-var message = require('./controller/c')
+var message = require('./controller/modulo/config.js')
 
 //EndPoint: retorna todos os dados de alunos
 app.get('/v1/lion-school/aluno', cors(), async function(request, response) {
-
 
     //solicita a controller que retorna todos os aluns do BD
     let dados = await controllerAluno.selecionarTodosOsAlunos()
 
     //valida se existe registros para retornar na requisiçao
-    if (dados) {
-        response.json(dados)
-        response.status(200)
-    } else {
-        response.json()
-        response.status(404)
-    }
+     response.status(dados.status)
+     response.json(dados)
+});
+//EndPoint: retorna todos os dados de alunos pelo ID
+app.get('/v1/lion-school/aluno/:id', cors(), async function(request, response) {
+
+    //recebe o id enviado na requisiçao
+    let idAluno = request.params.id
+
+    //solicita a controller que retorna todos os aluns do BD
+    let dados = await controllerAluno.buscarIdAluno(idAluno)
+
+    //valida se existe registros para retornar na requisiçao
+     response.status(dados.status)
+     response.json(dados)
+
 
 });
 
-//EndPoint: retorna todos os dados de alunos pelo ID
-app.get('/v1/lion-school/aluno/:id', cors(), async function(request, response) {
+//EndPoint: retorna todos os dados de alunos pelo NOME
+app.get('/v1/lion-school/aluno/:nome', cors(), async function(request, response) {
+
+    //recebe o name enviado na requisiçao
+    let nomeAluno = request.params.nome
+
+    //solicita a controller que retorna todos os aluns do BD
+    let dados = await controllerAluno.buscarNomeAluno(nomeAluno)
+
+    //valida se existe registros para retornar na requisiçao
+     response.status(dados.status)
+     response.json(dados)
 
 
 });
@@ -90,7 +108,8 @@ app.post('/v1/lion-school/aluno', cors(), bodyJSON, async function(request, resp
     response.json(resultIsertDados)
 
     }else{
-        response.status
+        response.status(message.ERROR_CONTENT_TYPE.status)
+        response.json(message.ERROR_CONTENT_TYPE)
     } 
 
 
@@ -126,6 +145,7 @@ app.delete('/v1/lion-school/aluno/:id', cors(), async function(request, response
 
 
 });
+
 
 app.listen(8080, function() {
     console.log('servidor aguardando requisiçoes na porta 8080!')

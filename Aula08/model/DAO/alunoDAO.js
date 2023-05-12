@@ -100,13 +100,57 @@ const selectAllAluno = async function() {
 }
 
 //retorna um registro filtrado do banco de dados
-const selectByIdAluno = function(id) {
+const selectByIdAluno = async function(id) {
+
+      //variavel com o scriptSQL para executar no BD
+      let sql = `select * from tbl_aluno where id = ${id}`
+
+      //Executa no BD o scriptSQL
+      //$queryRawUnsafe() é utilizado quando o scriptSQL esta em uma variavel
+      //$queryRaw() é utiltilizado quando passar o script direto no metodo. (EX: $queryRaw(select * from tbl_aluno)
+      let rsAluno = await prisma.$queryRawUnsafe(sql)
+  
+      //validar se o Bd retornou algum registro
+      if (rsAluno.length > 0)
+          return rsAluno
+      else
+          return false
 
 }
+
+const selectLastId = async function(){
+    //script para retorna apenas o ultimo registro inserido na tabela
+    let sql = 'select  id from tbl_aluno order by id desc limit 1'
+
+    let rsAluno = await prisma.$queryRawUnsafe(sql)
+
+    if(rsAluno.length > 0)
+        return rsAluno[0].id
+    else
+        return false    
+}
+
+const selectLastName = async function(nome){
+    //script para retorna apenas o ultimo registro inserido na tabela
+    let sql = `select * from tbl_aluno where nome like '%${nome}%'`
+
+    let rsAluno = await prisma.$queryRawUnsafe(sql)
+
+    console.log('OI');
+    
+    if(rsAluno.length > 0)
+        return rsAluno[0].nome
+    else
+        return false    
+}
+
 
 module.exports = {
     selectAllAluno,
     insertAluno,
     updateAluno,
-    deleteAluno
+    deleteAluno,
+    selectByIdAluno,
+    selectLastId,
+    selectLastName
 }
