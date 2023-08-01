@@ -22587,6 +22587,8 @@ function getCidades(siglaEstados) {
             listaJson.descricao = dados.nome
             listaJson.quantidade = listaArry.length
             listaJson.cidades = listaArry
+            listaJson.capital = dados.capital
+            listaJson.regiao = dados.regiao
 
         }
 
